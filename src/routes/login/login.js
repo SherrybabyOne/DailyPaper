@@ -1,5 +1,6 @@
 import React from 'react'
-import {Form,Button,Input,Icon,Checkbox} from 'antd'
+import {Form,Button,Input,Icon,message} from 'antd'
+import { routerRedux } from 'dva/router';
 import styles from './index.less'
 
 @Form.create()
@@ -113,8 +114,27 @@ class Login extends React.Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
-            console.log('Received values of form: ', values);
+            fetch('http://dailyreport.lyzwhh.top/user/login',{
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values)
+            }).then((res) => {
+                return res.json()
+              }).then((json) => {
+                console.log(json)
+                if(json.code===0){
+                    localStorage.setItem("data",json.data)
+                    message.success("登陆成功")
+                    routerRedux.push('/user')
+                }
+                else if(json.code===302){
+                    message.error("用户不存在")
+                }
+              })
           }
+
         });
       }
     
@@ -127,7 +147,7 @@ class Login extends React.Component{
                 <h2 className={styles.title}>不洗碗工作室</h2>
                 <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('name', {
             rules: [{ required: true, message: '请输入账号!' }],
           })(
             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="账号" />
@@ -141,17 +161,9 @@ class Login extends React.Component{
           )}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(
-            <Checkbox>记住我</Checkbox>
-          )}
-         
           <Button type="primary" htmlType="submit" className="login-form-button" style={{marginLeft:'6vw'}}>
             登陆
           </Button>
-
         </Form.Item>
       </Form>
                 </div>

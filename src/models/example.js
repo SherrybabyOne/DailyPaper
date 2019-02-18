@@ -1,7 +1,7 @@
 
 export default {
 
-  namespace: 'example',
+  namespace: 'login',
 
   state: {},
 
