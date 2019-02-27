@@ -5,7 +5,7 @@ import App from './routes/app';
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
-     <App  />
+      <App  />
     </Router>
   );
 }

@@ -1,7 +1,6 @@
 import dva from 'dva';
-import { createBrowserHistory as createHistory } from 'history';
+import createHistory from 'history/createBrowserHistory';
 import './reset.css';
-
 
 // 1. Initialize
 const app = dva({
