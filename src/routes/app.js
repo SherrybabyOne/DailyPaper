@@ -4,6 +4,7 @@ import Text from './text';
 import Login from './login/login'
 import Tags from './TagDisplay/Tags';
 import Regist from './register/register';
+import  Addtags from './Tags/tags';
 
 const App = (props) => {
   return (
@@ -13,6 +14,7 @@ const App = (props) => {
           <Route path="/login" component={Login}/>
           <Route path="/display" component={Tags}/>
           <Route path="/regist" component={Regist}/>
+          <Route path="/addtags" component={Addtags}/>
       </Switch>
     </div>
   )
