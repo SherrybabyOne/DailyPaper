@@ -143,7 +143,26 @@ class Register extends React.Component{
                 localStorage.setItem("data",JSON.stringify(json.data))
                 console.log(json.data);
                 message.success("注册成功")
-                routerRedux.push('/user')
+                fetch('http://dailyreport.lyzwhh.top/user/login',{
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then((res) => {
+                return res.json()
+              }).then((json) => {
+                console.log(json)
+                if(json.code===0){
+                    localStorage.setItem("data",JSON.stringify(json.data))
+                    
+                    message.success("登陆成功")
+                    routerRedux.push('/display')
+                }
+                else if(json.code===302){
+                    message.error("用户不存在")
+                }
+              })
               }
               else if(json.code === 301)
               {
